@@ -7,6 +7,14 @@
         name: httpd
         state: present
 
+    - name: Ensure /var/www/html exists
+      ansible.builtin.file:
+        path: /var/www/html
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: index.html
@@ -14,3 +22,10 @@
         owner: root
         group: root
         mode: '0644'
+
+    - name: Start and enable Apache httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
